@@ -377,6 +377,26 @@ class Mailer {
       throw error;
     }
   }
+  async sendContactEmail(
+    email: string,
+    subject: string,
+    message: string
+  ): Promise<void> {
+    try {
+      const mailOptions = {
+        from: email,
+        // to: "mugishayves189000@gmail.com",
+        to:"hticketedweb@gmail.com",
+        subject: subject,
+        text: message,
+      };
+
+      await this.transporter.sendMail(mailOptions);
+    } catch (error) {
+      console.error("Error sending email: ", error);
+      throw error;
+    }
+  }
 }
 
 export default new Mailer();
