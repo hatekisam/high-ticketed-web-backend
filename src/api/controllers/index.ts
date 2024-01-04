@@ -8,3 +8,4 @@ export { default as dashboardController } from "./dashboard.controller";
 export { default as contactController } from "./contact.controller";
 export { default as faqController } from "./faq.controller";
 export { default as testimonialController } from "./testimonial.controller";
+export { default as projectController } from "./project.controller";

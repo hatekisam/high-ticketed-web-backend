@@ -15,6 +15,7 @@ const schema = new Schema<IProject>(
   {
     name: { type: String, required: true },
     type: { type: String, required: true },
+    description: { type: String, required: true },
     documents: [{ type: String, required: true }],
     tasks: [{ type: Schema.ObjectId, required: true }],
     budget: { type: Number, required: false },

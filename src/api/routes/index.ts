@@ -7,6 +7,7 @@ import metadataRouter from "./metadata.route";
 // import notificationRouter from './notification.route'
 import dashboardRouter from "./dashboard.route";
 import contactRouter from "./contact.route";
+import projectRouter from "./project.routes";
 import docsRouter from "./docs.route";
 
 const router = express.Router();
@@ -23,6 +24,7 @@ const routes: {
   // { path: '/notification', route: notificationRouter },
   { path: "/dashboard", route: dashboardRouter },
   { path: "/contact", route: contactRouter },
+  { path: "/project", route: projectRouter },
 ];
 
 const devRoutes = [
