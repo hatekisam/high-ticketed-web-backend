@@ -1,7 +1,9 @@
 import { Schema, model, Model, Document, Types } from "mongoose";
 
 export interface IUser {
-  username: string;
+  name: string;
+  type: string;
+  customer:Types.ObjectId;
   profile: string;
   about?: string;
   workExperience: Types.ObjectId[];

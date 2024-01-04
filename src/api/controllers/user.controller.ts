@@ -140,12 +140,6 @@ const deleteUser = async (
   next: NextFunction
 ) => {
   try {
-    if (req.user?.id !== req.params.id)
-      throw new APIError(
-        status.BAD_REQUEST,
-        "You are not allowed to delete another user's account"
-      );
-
     await userService.deleteUser(req.params.id);
     res.status(status.NO_CONTENT).end();
   } catch (err) {

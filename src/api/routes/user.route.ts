@@ -56,20 +56,6 @@ router.put(
   userController.editWorkExperience
 );
 
-router.post(
-  "/profile/education",
-  accessControl("ALL"),
-  validator.body(userValidations.addEducation),
-  userController.addEducation
-);
-
-router.put(
-  "/profile/education/:id",
-  accessControl("ALL"),
-  validator.params({ id: idValidation }),
-  validator.body(userValidations.addWorkExperience),
-  userController.editWorkExperience
-);
 
 router.delete(
   "/:id",
