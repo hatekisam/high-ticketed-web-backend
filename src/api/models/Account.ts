@@ -24,7 +24,7 @@ const schema = new Schema<IAccount>(
     password: { type: String, required: true },
     phone: { type: String, required: true, unique: true },
     user: { type: Schema.ObjectId },
-    role: { type: String },
+    role: { type: String, required: true },
     profile: { type: String, required: false },
   },
   {

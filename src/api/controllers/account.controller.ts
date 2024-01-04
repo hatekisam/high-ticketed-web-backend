@@ -64,7 +64,7 @@ const createAccount = async (
   try {
     const { body } = req;
     const newAcc = {...body,role:"EMPLOYEE"}
-    const account = await accountService.createAccount(body);
+    const account = await accountService.createAccount(newAcc);
     res.status(200).json(account);
   } catch (err) {
     next(err);

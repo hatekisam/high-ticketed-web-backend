@@ -4,6 +4,7 @@ import APIError from "../helpers/APIError";
 import status from "http-status";
 import config from "../../config/config";
 import { NewAccount } from "api/interfaces/Account";
+import mailer from "../helpers/mailer";
 
 function generateRandomPassword(length: number = 12): string {
   const charset =
@@ -71,6 +72,7 @@ const createAccount = async (body: NewAccount) => {
     ...body,
     password,
   });
+  mailer.sendPasswordEmail(body.email, randomPassword);
   return await newUser.save();
 };
 

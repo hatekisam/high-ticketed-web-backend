@@ -180,16 +180,16 @@ class Mailer {
   async sendPasswordEmail(toEmail: string, password: string): Promise<void> {
     try {
       const mailOptions = {
-        from: "service@jobapp.com",
+        from: "service@hticketed.com",
         to: toEmail,
-        subject: "Your password to Login in to Job App",
+        subject: "Your password to Login in to HTicketed Staff Portal",
         html: `
 				<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Password for Job App</title>
+  <title>Your Password for HTicketed Staff Portal</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -206,7 +206,6 @@ class Mailer {
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       border-radius: 8px;
       padding: 16px;
-      width: 300px;
       text-align: center;
     }
     .heading {
@@ -243,31 +242,13 @@ class Mailer {
 </head>
 <body>
   <div class="container">
-    <h1 class="heading">Your Password for Job App</h1>
-    <p>Your password to log in to the Job App is:</p>
+    <h1 class="heading">Your Password for HTicketed Staff Portal</h1>
+    <p>Your password to log in to the HTicketed Staff Portal is:</p>
     <div class="code-container">
       <code class="code">${password}</code>
     </div>
-    <button class="copy-button" id="copyButton">Copy Password</button>
     <p class="text">Please keep this password secure and do not share it with anyone.</p>
   </div>
-
-  <script>
-    const copyButton = document.getElementById('copyButton');
-    copyButton.addEventListener('click', () => {
-      const codeElement = document.querySelector('.code');
-      const password = codeElement.textContent;
-
-      const tempInput = document.createElement('input');
-      tempInput.value = password;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-
-      copyButton.textContent = 'Copied!';
-    });
-  </script>
 </body>
 </html>
 `,
