@@ -3,7 +3,8 @@ import { Schema, model, Model, Document, Types } from "mongoose";
 export interface IUser {
   username: string;
   about?: string;
-  workExperience: Types.ObjectId[];
+  projects: Types.ObjectId[];
+  tasks: Types.ObjectId[];
   education: Types.ObjectId[];
   skills: Types.ObjectId[];
   role: Types.ObjectId[];
@@ -26,7 +27,8 @@ const schema = new Schema<IUser, UserModel>(
     username: { type: String, required: true },
     about: { type: String, required: false },
     dob: { type: Date },
-    projects: [{ type: Schema.ObjectId, ref: "Work" }],
+    projects: [{ type: Schema.ObjectId, ref: "Projects" }],
+    tasks: [{ type: Schema.ObjectId, ref: "Task" }],
     awards: [{ type: Schema.ObjectId, ref: "Award" }],
     languages: [{ type: Schema.ObjectId, ref: "Language" }],
     files: [{ type: Schema.ObjectId, ref: "Work" }],
