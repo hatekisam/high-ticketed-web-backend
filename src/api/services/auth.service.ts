@@ -3,7 +3,6 @@ import APIError from "../helpers/APIError";
 import status from "http-status";
 import bcrypt from "bcryptjs";
 import config from "../../config/config";
-import { NewUser } from "../interfaces/User";
 import { createAuthToken } from "../helpers/authToken";
 import {
   generateAppToken,
@@ -11,8 +10,6 @@ import {
   verifyAppToken,
 } from "../helpers/emailToken";
 import mailer from "../helpers/mailer";
-import { NewAccount } from "api/interfaces/Account";
-import accountService from "./account.service";
 
 const login = async ({
   email,
@@ -23,15 +20,13 @@ const login = async ({
 }) => {
   const account = await Account.findOne({ email })
     .populate("user")
-    .populate("company");
-  if (!account) throw new APIError(status.UNAUTHORIZED, "Email does not exist");
+  if (!account) throw new APIError(status.UNAUTHORIZED, "There is no account with the specified email");
   const isValidPassword = await bcrypt.compare(
     password,
     account.password as string
   );
   if (!isValidPassword)
     throw new APIError(status.UNAUTHORIZED, "Incorrect password");
-
   return {
     token: createAuthToken({
       id: account.id,
@@ -42,41 +37,7 @@ const login = async ({
   };
 };
 
-const loginAdmin = async ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
-  const admin = await Account.findOne({ email });
-  if (!admin) throw new APIError(status.UNAUTHORIZED, "Email does not exist");
-  const isValidPassword = await bcrypt.compare(password, admin.password);
 
-  if (!isValidPassword)
-    throw new APIError(status.UNAUTHORIZED, "Incorrect password");
-
-  return {
-    token: createAuthToken({
-      id: admin.id,
-      email: admin.email,
-      name: admin.name,
-    }),
-    user: admin.toJsonWithoutPassword(),
-  };
-};
-const register = async (body: NewAccount) => {
-  const account = await accountService.createAccount(body);
-  const token = await generateAppToken(account.email, "VERIFY_EMAIL");
-  return {
-    token: createAuthToken({
-      id: account.id,
-      name: body.name,
-      email: body.email,
-    }),
-    account: account.toJsonWithoutPassword(),
-  };
-};
 
 const newPassword = async ({
   password,
@@ -136,8 +97,6 @@ const sendVerifyEmail = async (email: string) => {
 
 export default {
   login,
-  register,
-  loginAdmin,
   forgotPassword,
   newPassword,
   verifyMail,
