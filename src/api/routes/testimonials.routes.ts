@@ -1,49 +1,16 @@
-import express from 'express'
-import { testimonialController } from '../controllers'
+import express from "express";
+import { testimonialController } from "../controllers";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get(
-        '/',
-        testimonialController.getAllTestimonials
-)
+router.get("/", testimonialController.getAllTestimonials);
 
-router.get(
-        '/:id',
-        testimonialController.getTestimonial
-)
+router.get("/:id", testimonialController.getTestimonial);
 
-router.post(
-        '/',
-        testimonialController.createTestimonial
-)
+router.post("/", testimonialController.createTestimonial);
 
+router.put("/:id", testimonialController.updateTestimonial);
 
+router.delete("/:id", testimonialController.deleteTestimonial);
 
-router.put(
-        '/:id',
-        testimonialController.updateTestimonial
-)
-
-
-router.delete(
-        '/:id',
-        testimonialController.deleteTestimonial
-)
-
-export default router
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default router;

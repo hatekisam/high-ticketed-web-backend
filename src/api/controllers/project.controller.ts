@@ -1,72 +1,79 @@
-import { testimonialService } from "../services"
-import { NextFunction, Request, Response } from "express"
-import status from 'http-status'
-import APIError from '../helpers/APIError'
+import { projectService } from "../services";
+import { NextFunction, Request, Response } from "express";
+import status from "http-status";
+import APIError from "../helpers/APIError";
 
-
-const createTestimonial = async (
-        req: Request,
-        res: Response,
-        next: NextFunction
+const createProject = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) => {
-        try {
-                const { body } = req
-                const savedtestimonial = await testimonialService.createTestimonial(body)
-                res.status(status.CREATED).json(savedtestimonial)
-        } catch (err) {
-                next(err)
-        }
-}
+  try {
+    const { body } = req;
+    const savedproject = await projectService.createProject(body);
+    res.status(status.CREATED).json(savedproject);
+  } catch (err) {
+    next(err);
+  }
+};
 
-const getTestimonial = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-                const testimonial = await testimonialService.getTestimonialById(req.params.id)
+const getProject = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const project = await projectService.getProjectById(req.params.id);
+    if (!project) throw new APIError(status.NOT_FOUND, "Project not found");
+    res.json(project);
+  } catch (err) {
+    next(err);
+  }
+};
 
-                if (!testimonial) throw new APIError(status.NOT_FOUND, 'Testimonial not found')
+const getAllProjects = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const projects = await projectService.getAllProjects();
+    res.json(projects);
+  } catch (err) {
+    next(err);
+  }
+};
 
-                res.json(testimonial)
-        } catch (err) {
-                next(err)
-        }
-}
+const updateProject = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const { body } = req;
+    const updatedProject = await projectService.updateProject(id, body);
+    if (!updatedProject)
+      throw new APIError(status.NOT_FOUND, "Project does not exist");
+    res.status(status.OK).json(updatedProject);
+  } catch (err) {
+    next(err);
+  }
+};
 
-const getAllTestimonials = async (_req: Request, res: Response, next: NextFunction) => {
-        try {
-                const testimonials = await testimonialService.getAllTestimonials()
-                res.json(testimonials)
-        } catch (err) {
-                next(err)
-        }
-}
-
-const updateTestimonial = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-                const id = req.params.id
-                const { body } = req
-
-                const updatedTestimonial = await testimonialService.updateTestimonial(id, body)
-
-                if (!updatedTestimonial) throw new APIError(status.NOT_FOUND, 'Testimonial does not exist')
-
-                res.status(status.OK).json(updatedTestimonial)
-        } catch (err) {
-                next(err)
-        }
-}
-
-const deleteTestimonial = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-                await testimonialService.deleteTestimonial(req.params.id)
-                res.status(status.NO_CONTENT).end()
-        } catch (err) {
-                next(err)
-        }
-}
+const deleteProject = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    await projectService.deleteProject(req.params.id);
+    res.status(status.NO_CONTENT).end();
+  } catch (err) {
+    next(err);
+  }
+};
 
 export default {
-        createTestimonial,
-        getTestimonial,
-        getAllTestimonials,
-        deleteTestimonial,
-        updateTestimonial
-}
+  createProject,
+  getProject,
+  getAllProjects,
+  deleteProject,
+  updateProject,
+};
