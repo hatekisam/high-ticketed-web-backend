@@ -30,7 +30,6 @@ const becomeRecruiter = async (
   try {
     const account = await accountService.becomeRecruiter(
       req.user?.id,
-      req.body
     );
     res.json({ msg: "Become a recruiter successfully", account });
   } catch (err) {
@@ -64,6 +63,7 @@ const createAccount = async (
 ) => {
   try {
     const { body } = req;
+    const newAcc = {...body,role:"EMPLOYEE"}
     const account = await accountService.createAccount(body);
     res.status(200).json(account);
   } catch (err) {

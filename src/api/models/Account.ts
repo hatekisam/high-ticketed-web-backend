@@ -6,7 +6,7 @@ export interface IAccount {
   email: string;
   password: string;
   phone: string;
-  profile: string;
+  profile?: string;
   role: "ADMIN" | "EMPLOYEE";
   user?: Types.ObjectId;
 }

@@ -58,9 +58,9 @@ schema.set("toJSON", {
   },
 });
 
-schema.virtual("role").get(function () {
-  return "USER";
-});
+// schema.virtual("role").get(function () {
+//   return "USER";
+// });
 
 const User = model<IUser, UserModel>("User", schema);
 

@@ -2,7 +2,6 @@ import express from "express";
 import { authController } from "../controllers";
 import validator from "../middlewares/validator";
 import {
-  adminValidations,
   authValidation,
   accountValidations,
 } from "../validations";
@@ -39,11 +38,6 @@ router.post(
   authController.newPassword
 );
 
-router.post(
-  "/admin/login",
-  validator.body(adminValidations.loginAdmin),
-  authController.loginAdmin
-);
 
 router.post(
   "/verify-mail",

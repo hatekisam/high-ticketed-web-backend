@@ -1,4 +1,4 @@
-import { Account, Company, User, ICompany } from "../models";
+import { Account, User } from "../models";
 import bcrypt from "bcryptjs";
 import APIError from "../helpers/APIError";
 import status from "http-status";
@@ -41,7 +41,7 @@ const becomeUser = async ({
   return account.save();
 };
 
-const becomeRecruiter = async (id: string | undefined, body: ICompany) => {
+const becomeRecruiter = async (id: string | undefined) => {
   if (id == undefined)
     throw new APIError(status.UNAUTHORIZED, "You are not logged in");
   const account = await Account.findById(id);
@@ -52,9 +52,9 @@ const becomeRecruiter = async (id: string | undefined, body: ICompany) => {
     );
   if (account.user)
     throw new APIError(status.CONFLICT, "You are already a recruiter");
-  const newCompany = new Company(body);
-  await newCompany.save();
-  account.company = newCompany.id;
+  // const newCompany = new Company(body);
+  // await newCompany.save();
+  // // account.company = newCompany.id;
   return await account?.save();
 };
 
@@ -63,9 +63,7 @@ const createAccount = async (body: NewAccount) => {
     $or: [{ email: body.email }, { phone: body.phone }],
   });
   if (existingAccount) {
-    if (existingAccount.email === body.email)
-      throw new APIError(status.CONFLICT, `Email already taken`);
-    throw new APIError(status.CONFLICT, `Phone Number already taken`);
+    throw new APIError(status.CONFLICT, `Employee already exists`);
   }
   const randomPassword = generateRandomPassword();
   const password = await bcrypt.hash(randomPassword, config.BCRYPT_SALT);

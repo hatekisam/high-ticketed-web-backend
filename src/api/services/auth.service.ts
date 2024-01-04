@@ -1,4 +1,4 @@
-import { Account, Admin, User } from "../models";
+import { Account, User } from "../models";
 import APIError from "../helpers/APIError";
 import status from "http-status";
 import bcrypt from "bcryptjs";
@@ -49,7 +49,7 @@ const loginAdmin = async ({
   email: string;
   password: string;
 }) => {
-  const admin = await Admin.findOne({ email });
+  const admin = await Account.findOne({ email });
   if (!admin) throw new APIError(status.UNAUTHORIZED, "Email does not exist");
   const isValidPassword = await bcrypt.compare(password, admin.password);
 

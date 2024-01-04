@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.post(
   "/",
-  accessControl(["ADMIN"]),
+  // accessControl(["ADMIN"]),
   validator.body(accountValidations.newAccount),
   accountController.createAccount
 );
