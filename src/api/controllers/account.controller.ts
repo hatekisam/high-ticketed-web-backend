@@ -57,9 +57,24 @@ const deleteAccount = async (
   }
 };
 
+const createAccount = async (
+  req: IUserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { body } = req;
+    const account = await accountService.createAccount(body);
+    res.status(200).json(account);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   becomeUser,
   becomeRecruiter,
   deleteAccount,
+  createAccount,
   // searchUser,
 };

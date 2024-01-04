@@ -6,9 +6,9 @@ export interface IAccount {
   email: string;
   password: string;
   phone: string;
+  profile: string;
+  role: "ADMIN" | "EMPLOYEE";
   user?: Types.ObjectId;
-  company?: Types.ObjectId;
-  emailVerified: boolean;
 }
 
 export interface IAccountMethods {
@@ -21,11 +21,11 @@ const schema = new Schema<IAccount>(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, lowercase: true },
-    emailVerified: { type: Boolean, default: false },
     password: { type: String, required: true },
     phone: { type: String, required: true, unique: true },
     user: { type: Schema.ObjectId },
-    company: { types: Schema.ObjectId },
+    role: { type: String },
+    profile: { type: String, required: false },
   },
   {
     timestamps: true,

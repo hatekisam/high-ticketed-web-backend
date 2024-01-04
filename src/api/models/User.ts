@@ -2,17 +2,21 @@ import { Schema, model, Model, Document, Types } from "mongoose";
 
 export interface IUser {
   username: string;
-  profile: string;
   about?: string;
   workExperience: Types.ObjectId[];
   education: Types.ObjectId[];
   skills: Types.ObjectId[];
+  role: Types.ObjectId[];
   languages: Types.ObjectId[];
   awards: Types.ObjectId[];
   files: Types.ObjectId[];
   dob: Date;
   gender: "MALE" | "FEMALE" | "NONE";
-  location: string;
+  contract: string;
+  salary: number;
+  hours: number;
+  balance: number;
+  address: string;
 }
 
 type UserModel = Model<IUser, Record<string, never>>;
@@ -21,16 +25,19 @@ const schema = new Schema<IUser, UserModel>(
   {
     username: { type: String, required: true },
     about: { type: String, required: false },
-    profile: { type: String, required: false },
-    location: { type: String },
     dob: { type: Date },
-    workExperience: [{ type: Schema.ObjectId, ref: "Work" }],
+    projects: [{ type: Schema.ObjectId, ref: "Work" }],
     awards: [{ type: Schema.ObjectId, ref: "Award" }],
     languages: [{ type: Schema.ObjectId, ref: "Language" }],
-    education: [{ type: Schema.ObjectId, ref: "Education" }],
     files: [{ type: Schema.ObjectId, ref: "Work" }],
     skills: [{ type: Schema.ObjectId, ref: "Skills" }],
     gender: { type: String, default: "NONE" },
+    role: [{ type: Schema.ObjectId, ref: "Role" }],
+    contract: { type: String, required: true },
+    salary: { type: Number, required: true },
+    hours: { type: Number, default: 0 },
+    balance: { type: Number, default: 0 },
+    address: { type: String, required: true },
   },
   {
     timestamps: true,

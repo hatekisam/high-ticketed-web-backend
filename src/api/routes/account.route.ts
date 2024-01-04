@@ -11,6 +11,19 @@ import accessControl from "../middlewares/accessControl";
 
 const router = express.Router();
 
+router.post(
+  "/",
+  accessControl(["ADMIN"]),
+  validator.body(accountValidations.newAccount),
+  accountController.createAccount
+);
+
+router.put(
+  "/",
+  accessControl(["ADMIN"]),
+  validator.body(accountValidations.newAccount),
+  accountController.createAccount
+);
 // router.get(
 //   "/search",
 //   accessControl("ALL"),

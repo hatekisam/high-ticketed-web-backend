@@ -3,17 +3,18 @@ import { LoginAccount, NewAccount } from "api/interfaces/Account";
 export default {
   newAccount: Joi.object<NewAccount>({
     name: Joi.string().required(),
+    username:Joi.string().required(),
     email: Joi.string().email().required(),
     phone: Joi.string().required(),
+    address:Joi.string().required(),
+    salary:Joi.number().required(),
+    contract:Joi.string().required(),
+    profile:Joi.string().optional(),
     password: Joi.string().min(8).max(25).required(),
   }),
   verifyEmail: Joi.object({
     email: Joi.string().email().required(),
     code: Joi.string().length(4),
-  }),
-  loginAccount: Joi.object<LoginAccount>({
-    email: Joi.string().email().required(),
-    password: Joi.string().required(),
   }),
   updateAccount: Joi.object({
     name: Joi.string().optional(),

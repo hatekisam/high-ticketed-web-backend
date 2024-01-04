@@ -5,6 +5,19 @@ import status from "http-status";
 import config from "../../config/config";
 import { NewAccount } from "api/interfaces/Account";
 
+function generateRandomPassword(length: number = 12): string {
+  const charset =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    password += charset[randomIndex];
+  }
+
+  return password;
+}
+
 const becomeUser = async ({
   id,
   username,
@@ -54,7 +67,8 @@ const createAccount = async (body: NewAccount) => {
       throw new APIError(status.CONFLICT, `Email already taken`);
     throw new APIError(status.CONFLICT, `Phone Number already taken`);
   }
-  const password = await bcrypt.hash(body.password, config.BCRYPT_SALT);
+  const randomPassword = generateRandomPassword();
+  const password = await bcrypt.hash(randomPassword, config.BCRYPT_SALT);
   const newUser = new Account({
     ...body,
     password,

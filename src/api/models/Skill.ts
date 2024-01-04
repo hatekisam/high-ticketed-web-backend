@@ -2,6 +2,7 @@ import { Schema, model, Model } from "mongoose";
 
 export interface ISkill {
   title: string;
+  level: number;
   description?: string;
 }
 
@@ -10,6 +11,7 @@ type SkillModel = Model<ISkill, Record<string, never>>;
 const schema = new Schema<ISkill, SkillModel>(
   {
     title: { type: String, required: true },
+    level: { type: Number, required: true },
     description: { type: String, required: false },
   },
   {

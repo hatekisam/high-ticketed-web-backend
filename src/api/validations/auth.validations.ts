@@ -5,6 +5,10 @@ export default {
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
+  loginAccount: Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
   verifyMail: Joi.object({
     email: Joi.string().email(),
     code: Joi.string(),

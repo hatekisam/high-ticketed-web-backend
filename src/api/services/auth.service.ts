@@ -25,7 +25,10 @@ const login = async ({
     .populate("user")
     .populate("company");
   if (!account) throw new APIError(status.UNAUTHORIZED, "Email does not exist");
-  const isValidPassword = await bcrypt.compare(password, account.password);
+  const isValidPassword = await bcrypt.compare(
+    password,
+    account.password as string
+  );
   if (!isValidPassword)
     throw new APIError(status.UNAUTHORIZED, "Incorrect password");
 
